@@ -1,0 +1,18 @@
+steps:
+# Step 1: Build the Docker image
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'us-central1-docker.pkg.dev/gcp-practise-456212/docker-repo/python:green3', '.']
+
+# Step 2: Push the Docker image to Artifact Registry
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'us-central1-docker.pkg.dev/gcp-practise-456212/docker-repo/python:green3']
+
+# Step 3: Deploy the Docker image to Cloud Run
+- name: 'gcr.io/cloud-builders/gcloud'
+  args: [
+    'run', 'deploy', 'cloud-run-deploy',
+    '--image', 'us-central1-docker.pkg.dev/gcp-practise-456212/docker-repo/python:green3',
+    '--region=us-central1',
+    '--allow-unauthenticated'
+  ]
+lo
